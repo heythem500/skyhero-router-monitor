@@ -8,6 +8,10 @@ Shell-based v2.0 network-traffic &amp; device monitor for AsusWRT-Merlin firmwar
   <img src="screenshots/Screenshot2-skyhero-v2.0.jpg" alt="device traffic data on mobile" width="250"/>
 </div>
 
+### ✨ main Features
+- **internet usage**: total solution to track each device usage 
+- **Qouta usage**: track your monthly internet usage
+
   
 ## 📋 Prerequisites
 
@@ -31,7 +35,7 @@ opkg install lighttpd-mod-cgi
 by running "amtm" on your sh and install is using the code "ep" it's merlin related script
 
 # to Install the 2.0 script Run manually
-# ym = usb name
+#### ym = usb name
 <pre>
 ```bash
 chmod +x /tmp/mnt/ym/skyhero-v2/install.sh
