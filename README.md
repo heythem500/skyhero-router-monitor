@@ -43,6 +43,13 @@ chmod +x /tmp/mnt/ym/skyhero-v2/install.sh
   ```
 </pre>
 
+#### lighttpd setup "just in case something is wrong"
+either your use 
+`chmod +x /tmp/mnt/ym/superman-v2/scripts/menu.sh` then check the option related to lighttpd setup and you are done.
+ <br/> if not then replace the content of [lighttpd.conf] found at this path:
+ `/opt/etc/lighttpd/`
+
+
 License
 Distributed under the MIT License.
 
