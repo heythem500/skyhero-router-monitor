@@ -30,11 +30,11 @@ opkg install lighttpd-mod-cgi
   ```
 </pre>
 
-# if any of these lines failed then first install :
+### if any of these lines failed then first install :
 🔴 <u>**Entware**</u>  <br/>
 by running "amtm" on your sh and install is using the code "ep" it's merlin related script
 
-# to Install the 2.0 script Run manually
+### to Install the 2.0 script Run these commands
 #### ym = usb name
 <pre>
 ```bash
@@ -45,7 +45,7 @@ chmod +x /tmp/mnt/ym/skyhero-v2/install.sh
 
 #### lighttpd setup "just in case something is wrong"
 either your use 
-`chmod +x /tmp/mnt/ym/superman-v2/scripts/menu.sh` then check the option related to lighttpd setup and you are done.
+`chmod +x /tmp/mnt/ym/skyhero-v2-v2/scripts/menu.sh` then check the option related to lighttpd setup and you are done.
  <br/> if not then replace the content of [lighttpd.conf] found at this path:
  `/opt/etc/lighttpd/`
 
