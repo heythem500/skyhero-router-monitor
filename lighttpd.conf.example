@@ -1,0 +1,36 @@
+server.modules = (
+    "mod_access",
+    "mod_alias",
+    "mod_redirect",
+    "mod_indexfile",
+    "mod_cgi",
+)
+
+server.document-root = "/tmp/mnt/ym/skyhero-v2/www"
+server.port = 8081 # Ensure this port is not in use by other services
+
+index-file.names = ( "index.html" )
+
+mimetype.assign = (
+    ".html" => "text/html",
+    ".css" => "text/css",
+    ".js" => "application/javascript",
+    ".json" => "application/json",
+    ".png" => "image/png",
+    ".jpg" => "image/jpeg",
+    ".sh" => "text/plain" # Default, overridden by cgi.assign
+)
+
+cgi.assign = ( ".sh" => "/bin/sh" )
+
+# Corrected Alias for Skyhero-Tacking v2.0 dashboard and data directories
+# The more specific alias for data MUST come before the general dashboard alias.
+alias.url = (
+    "/skyhero-v2/data/" => "/tmp/mnt/ym/skyhero-v2/data/",
+    "/skyhero-v2/logs/" => "/tmp/mnt/ym/skyhero-v2/logs/",
+    "/skyhero-v2/" => "/tmp/mnt/ym/skyhero-v2/www/"
+)
+
+# Optional: Logging (uncomment and adjust paths if needed)
+# accesslog.filename = "/opt/var/log/lighttpd/access.log"
+# server.errorlog = "/opt/var/log/lighttpd/error.log"

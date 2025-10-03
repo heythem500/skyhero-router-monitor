@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Superman-Tracking v2.0 Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="skyhero-icon.png" type="image/png">
+    <script src="chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="dashboard-content">
+        <div class="header">
+        <div class="main-title-group">
+            <h1><img src="skyhero-icon.png" alt="Skyhero Icon" class="logo-image"> Skyhero-Tracking</h1>
+            <span class="tagline">Network Traffic Dashboard</span>
+            <span class="version-info">v2.0</span>
+        </div>
+        <div class="traffic-lights">
+            <div class="traffic-light-dot"></div>
+            <div class="traffic-light-dot"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Controls</h2>
+            <div class="control-panel">
+                <div class="control-section">
+                    <h3>Quick Filters</h3>
+                    <div class="quick-filters">
+                        <button class="quick-filter-button-item" data-filter-type="all_time">All Time</button>
+                        <button class="quick-filter-button-item" data-filter-type="today">Today</button>
+                        <button class="quick-filter-button-item" data-filter-type="yesterday">Yesterday</button>
+                        <button class="quick-filter-button-item" data-filter-type="last_7_days">Last 7 Days</button>
+                        <div class="navigator-subtle" id="month-navigator" style="display: none;">
+                            <button class="arrow-btn" id="next-month">&lsaquo;</button>
+                            <div class="month-display" id="current-month-display"></div>
+                            <button class="arrow-btn" id="prev-month">&rsaquo;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-section">
+                    <h3>Billing Period Calculator</h3>
+                    <div class="billing-controls">
+                        <div class="group"><label>Start Date</label><input type="date" id="billingStart" value="2025-06-01"></div>
+                        <div class="group">
+                            <label>Period</label>
+                            <select id="billingDays">
+                                <option value="15">15 Days</option>
+                                <option value="28">28 Days</option>
+                                <option value="29">29 Days</option>
+                                <option value="30" selected>30 Days</option>
+                                <option value="31">31 Days</option>
+                            </select>
+                        </div>
+                        <button class="apply-btn">Apply Filter</button>
+                    </div>
+                </div>
+            </div>
+            <div class="quota-card">
+                <div class="quota-header-and-details">
+                    <h3>Monthly Quota Usage: <span id="quotaUsed">0 GB</span> / <span id="quotaTotal">0 GB</span></h3>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="quotaProgressBar"></div>
+                    <span class="progress-percentage" id="quotaPercentage"></span>
+                </div>
+                <div class="quota-message" id="quotaMessage"></div>
+            </div>
+        </div>
+
+        <div id="restore-warning" style="display:none;">
+            <span id="restore-message"></span>
+            <a href="#" onclick="viewRestoreHistory(); return false;">View Full History</a>
+            <button onclick="dismissRestoreWarning()">✕</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px; display: none;" id="palestineKidContainer">
+            <div id="palestineImageWrapper" style="display: inline-block; position: relative;">
+                <img src="palestine_kid.png" alt="Stand with Palestine" style="width: 100%; height: auto; display: block;">
+                <button id="hidePalestineKid" style="position: absolute; top: 5px; right: 5px; background-color: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; display: none;">Hide <span id="countdownSpan"></span></button>
+                <button id="keepPalestineKid" style="position: absolute; top: 5px; left: 5px; background-color: rgba(0,0,0,0.5); color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; display: none;">Keep It</button>
+            </div>
+        </div>
+
+        <div id="history-modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeHistoryModal()">&times;</span>
+                <h2>DB Restore History</h2>
+                <pre id="history-log-content"></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 id="overview-title">Period Overview: All Time</h2>
+            <div class="overview-grid">
+                <div class="chart-container">
+                    <h3 id="bar-chart-title">Monthly Breakdown</h3>
+                    <canvas id="dailyBarChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Top Device Usage</h3>
+                    <canvas id="devicePieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Breakdown Modal -->
+        <div id="dailyBreakdownModal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeDailyBreakdownModal()">&times;</span>
+                <h2>View Daily Data</h2>
+                <p id="dailyBreakdownMessage"></p>
+                <div class="modal-actions">
+                    <button onclick="confirmDailyBreakdown()">View Data</button>
+                    <button onclick="closeDailyBreakdownModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Card Modal -->
+        <div id="deviceCardModal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeDeviceCardModal()">&times;</span>
+                <div id="deviceCardModalContent">
+                    <!-- Device card will be rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Total Usage Statistics</h2>
+            <div class="total-stats">
+                <div class="stat-box"><div class="label">Total Devices</div><div class="value" id="totalDevices">0</div></div>
+                <div class="stat-box" id="avgDailyTrafficBox" style="display:none;"><div class="label">Avg. Daily Traffic</div><div class="value" id="avgDailyTraffic">0 GB</div></div>
+                <div class="stat-box"><div class="label">Total Download</div><div class="value" id="totalDownload">0 GB</div></div>
+                <div class="stat-box"><div class="label">Total Upload</div><div class="value" id="totalUpload">0 GB</div></div>
+                <div class="stat-box"><div class="label">Total Traffic</div><div class="value" id="totalTraffic">0 GB</div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Top Applications/Websites</h2>
+            <div class="chart-container">
+                <canvas id="topAppsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Device Traffic</h2>
+            <input type="text" id="deviceSearch" onkeyup="filterContent()" placeholder="Search for a device...">
+            
+            <!-- Smart Grouping Area -->
+            <div id="grouping-area" class="grouping-area">
+                <div id="pills-container" class="pills-container"></div>
+                <div class="analytics-container">
+                    <div id="analytics-summary" class="analytics-summary"></div>
+                    <div class="chart-container" style="width: 150px; height: 150px;">
+                        <canvas id="group-chart"></canvas>
+                    </div>
+                </div>
+                <div class="save-group-container">
+                    <div class="input-and-save-btn">
+                        <input type="text" id="group-name-input" placeholder="Enter group name...">
+                        <button id="save-group-btn">Save Group</button>
+                    </div>
+                    <button id="cancel-update-btn" style="display:none;">Cancel Update</button>
+                    <button id="toggle-group-chart-btn">Hide Chart</button>
+                </div>
+            </div>
+            <div id="saved-groups-container" class="saved-groups-container"></div>
+
+            <div class="table-responsive" id="device-table-container">
+    <table>
+        <thead><tr><th id="checkbox-header"><span id="clear-all-devices-icon" style="display:none; cursor:pointer; font-size: 1.2em; color: #dc3545;" title="Clear all selected devices">&times;</span></th><th onclick="sortTable(0)">Device Name ↕</th><th onclick="sortTable(1)">MAC Address ↕</th><th onclick="sortTable(2)">Download ↕</th><th onclick="sortTable(3)">Upload ↕</th><th onclick="sortTable(4)">Percentage ↕</th><th onclick="sortTable(5)">Total ↕</th></tr></thead>
+        <tbody id="deviceTableBody"></tbody>
+    </table>
+</div>
+<div id="device-cards-container" class="device-cards-grid"></div>
+        </div>
+    </div>
+
+    <div id="loader-overlay" style="display:none;">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p>Generating custom report...</p>
+        </div>
+    </div>
+
+    
+
+    <footer>
+        <span>Free Palestine <img src="palestine_flag.png" alt="Flag of Palestine" style="height: 16px; vertical-align: middle;"> | &copy; 2025 heythem. All rights reserved. | <a href="https://github.com/heythem500" target="_blank">GitHub</a> | <a href="https://buymeacoffee.com/heythem500" target="_blank">Buy me a coffee</a></span>
+    </footer>
+
+    
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.2.0/dist/dom-to-image-more.min.js"></script>
+    </div>
+    <div id="login-overlay" style="display:none;">
+        <div class="login-box">
+            <h2>🔒Secure Access</h2>
+            <p>Please enter the password to access the dashboard.</p>
+            <form id="login-form">
+                <input type="password" id="password-input" placeholder="Password">
+                <button type="submit">Unlock</button>
+                <p class="error-message" id="error-message">
+                    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    <span class="error-text">Incorrect Password</span>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
