@@ -2,8 +2,8 @@
 Shell-based v2.0 network-traffic &amp; device monitor for AsusWRT-Merlin firmware — runs as a separate web dashboard; archived for educational and research use, illustrating design patterns and scripting techniques.
 
 📸skyhero main dashboard
-<p align="center"> ![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot1-skyhero-v2.0.jpg) </p><br/>  
-<p align="center"> ![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot2-skyhero-v2.0.jpg) </p>
+![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot1-skyhero-v2.0.jpg)
+![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot2-skyhero-v2.0.jpg)
 
   
 ## 📋 Prerequisites
@@ -14,12 +14,14 @@ Shell-based v2.0 network-traffic &amp; device monitor for AsusWRT-Merlin firmwar
 
 ### 🔧 Required Packages
 Run these commands on your router before using the script:
-
-
+<pre>
+```bash
 opkg update
 opkg install jq
 opkg install lighttpd 
 opkg install lighttpd-mod-cgi
+  ```
+</pre>
 
 if any of these lines failed then first install :
 Entware
