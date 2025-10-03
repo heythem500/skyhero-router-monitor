@@ -1,16 +1,23 @@
 # skyhero-router-monitor
 Shell-based v2.0 network-traffic &amp; device monitor for AsusWRT-Merlin firmware — runs as a separate web dashboard; archived for educational and research use, illustrating design patterns and scripting techniques.
 
+<div align="center">
 📸skyhero main dashboard
-![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot1-skyhero-v2.0.jpg)
 ![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot2-skyhero-v2.0.jpg)
+![Screenshot](https://github.com/heythem500/skyhero-router-monitor/blob/main/screenshots/Screenshot1-skyhero-v2.0.jpg)
+</div>
 
+  
 ## 📋 Prerequisites
-Basic:
-- you must have asus router
-- you must use Asus merlin firmware 
 
-Before running this script, make sure you run these commands:
+### ✅ Basic Requirements
+- ASUS router (any model supporting Merlin)
+- ASUS Merlin firmware installed
+
+### 🔧 Required Packages
+Run these commands on your router before using the script:
+
+```bash
 opkg update
 opkg install jq
 opkg install lighttpd 
