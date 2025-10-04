@@ -18,6 +18,7 @@ Shell-based v2.0 network-traffic &amp; device monitor for AsusWRT-Merlin firmwar
 ### ✅ Basic Requirements
 - ASUS router (any model supporting Merlin) model that supports "Traffic Analyzer" but not sure if it's a must..
 - ASUS Merlin firmware installed
+- External USB
 
 ### 🔧 Required Packages
 Run these commands on your router before using the script:
@@ -32,7 +33,8 @@ opkg install lighttpd-mod-cgi
 
 ### if any of these lines failed then first install :
 🔴 <u>**Entware**</u>  <br/>
-by running "amtm" on your sh and install is using the code "ep" it's merlin related script
+by running "amtm" on your sh and install is using the code "ep" it's merlin related script <br/>
+---> download & copy project the folder into your usb 
 
 ### to Install the 2.0 script Run these commands
 #### ym = usb name
